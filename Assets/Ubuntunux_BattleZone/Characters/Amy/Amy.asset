@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 432feff68f58b2542a2c5a2db890ca6b, type: 3}
+  m_Name: Amy
+  m_EditorClassIdentifier: 
+  Annoying: {fileID: 21300000, guid: 7157bb5de7535e2c9a3336a6d0833617, type: 3}
+  Attack0: {fileID: 21300000, guid: 92931459ab13de5f98319cb0dc42d50a, type: 3}
+  Attack1: {fileID: 21300000, guid: 4772020d55b5baf2490be18ad8b7de02, type: 3}
+  Attack2: {fileID: 21300000, guid: 363e721f1ef732481a3e2e9d38ad8929, type: 3}
+  Groggy: {fileID: 21300000, guid: 9aa0a2707f0abd8478dd2082c0d4a5f7, type: 3}
+  Hit: {fileID: 21300000, guid: c0f72782deebb3db8a6afe384f9a07e2, type: 3}
+  Lose: {fileID: 21300000, guid: bf8ee7f7fac6bd496adf057e1921b9f8, type: 3}
+  Portrait: {fileID: 21300000, guid: e99c94c3c4f45b0a88355a3edb8779aa, type: 3}
+  PortraitLose: {fileID: 21300000, guid: 84150e8d73aa522d8ac93db1f7d509a0, type: 3}
+  Stand: {fileID: 21300000, guid: 84f0a6c535fa923ccb7ac1d0e1824095, type: 3}
