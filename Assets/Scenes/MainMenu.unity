@@ -214,6 +214,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -840,19 +841,7 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 505204557}
-        m_TargetAssemblyTypeName: VolumeManager, Assembly-CSharp
-        m_MethodName: SetMusicVolume
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 1
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &408408880
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,6 +973,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1090,16 +1080,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65bf20eef96e4de4f8ccbefec03c1e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmMainMenu: {fileID: 0}
-  bgmLevel1: {fileID: 0}
+  bgmMainMenu: {fileID: 8300000, guid: 0559a10dd4ee15a4bba89214af8fa957, type: 3}
+  bgmLevel1: {fileID: 8300000, guid: 8d1501a4ba366b74bbf4c4b44be2f94a, type: 3}
   bgmLevel2: {fileID: 0}
   bgmVictory: {fileID: 0}
   bgmDefeat: {fileID: 0}
-  buttonClick: {fileID: 0}
+  buttonClick: {fileID: 8300000, guid: b87a2a9c15bbd7e44b9fdda46f159f71, type: 3}
+  charaClick: {fileID: 8300000, guid: a18b1de35a7266a499443cc215df3542, type: 3}
   musicVolume: 0.5
   sfxVolume: 1
   overlayVolume: 0.8
-  musicFadeDuration: 1
+  musicFadeDuration: 0
 --- !u!4 &505204558
 Transform:
   m_ObjectHideFlags: 0
@@ -1204,19 +1195,7 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 505204557}
-        m_TargetAssemblyTypeName: VolumeManager, Assembly-CSharp
-        m_MethodName: SetSFXVolume
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 1
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &560798564
 GameObject:
   m_ObjectHideFlags: 0
@@ -1314,6 +1293,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1783,6 +1763,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1859,6 +1840,8 @@ MonoBehaviour:
   PlayButton: {fileID: 794506375}
   QuitButton: {fileID: 172600045}
   BackButton: {fileID: 1640765558}
+  musicSlider: {fileID: 371944757}
+  sfxSlider: {fileID: 520979974}
 --- !u!4 &1038724850
 Transform:
   m_ObjectHideFlags: 0
@@ -2154,6 +2137,7 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2290,6 +2274,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2367,7 +2352,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 858, y: -497}
+  m_AnchoredPosition: {x: -3, y: -237}
   m_SizeDelta: {x: 173.9547, y: 50.8341}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1640765558
@@ -2547,6 +2532,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2953,6 +2939,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0

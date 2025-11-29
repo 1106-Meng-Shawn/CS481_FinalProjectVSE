@@ -22,6 +22,7 @@ public class VolumeManager : MonoBehaviour
 
     [Header("SFX Clips")]
     public AudioClip buttonClick;
+    public AudioClip charaClick;
 
     [Header("Volumes")]
     [Range(0f, 1f)] public float musicVolume = 0.5f;
@@ -37,6 +38,7 @@ public class VolumeManager : MonoBehaviour
         {
             musicVolume = Instance.musicVolume;
             sfxVolume = Instance.sfxVolume;
+
             Destroy(gameObject);
             return;
         }
@@ -83,12 +85,12 @@ public class VolumeManager : MonoBehaviour
         AudioClip clipToPlay = sceneName switch
         {
             "MainMenu" => bgmMainMenu,
-            "SampleScene" => bgmLevel1,
+            "BattleScene" => bgmLevel1,
             "Level2" => bgmLevel2,
             _ => bgmMainMenu
         };
 
-        if (sceneName == "SampleScene")
+        if (sceneName == "BattleScene")
         {
             int customIndex = PlayerPrefs.GetInt("NextLevelMusicIndex", -1);
             if (customIndex >= 0)
@@ -180,6 +182,7 @@ public class VolumeManager : MonoBehaviour
     }
 
     public void PlayButtonClick() => PlaySFX(buttonClick);
+    public void PlayCharaClick() => PlaySFX(charaClick);
 
     public void SetMusicVolume(float vol)
     {

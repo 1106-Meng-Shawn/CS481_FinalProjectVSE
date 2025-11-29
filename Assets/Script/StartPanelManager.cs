@@ -22,6 +22,7 @@ public class StartPanelManager : MonoBehaviour
         public Button SelectButton;
         public Button RandomButton;
         public bool isPlayer;
+
     }
 
     [SerializeField] ScrollRect scrollRect;
@@ -102,6 +103,7 @@ public class StartPanelManager : MonoBehaviour
 
     void OnStartButtonClick()
     {
+        VolumeManager.Instance.PlayButtonClick();
         BattleManager.Instance.InitBattle(playerSel.currentCharacter, enemySel.currentCharacter);
         panel.SetActive(false);
     }
@@ -109,6 +111,7 @@ public class StartPanelManager : MonoBehaviour
 
     void OnEndButtonClick()
     {
+       VolumeManager.Instance.PlayButtonClick();
         #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
         #else
@@ -148,6 +151,7 @@ public class StartPanelManager : MonoBehaviour
 
     void OnSelectButtonClick(bool isPlayer)
     {
+        VolumeManager.Instance.PlayButtonClick();
         RefreshScrollRect(isPlayer);
     }
 
@@ -159,6 +163,7 @@ public class StartPanelManager : MonoBehaviour
 
     void SetCurrentCharacter(bool isPlayer ,PreviewCharacter newCharacter)
     {
+        VolumeManager.Instance.PlayCharaClick();
         if (isPlayer)
         {
             playerSel.currentCharacter = newCharacter;

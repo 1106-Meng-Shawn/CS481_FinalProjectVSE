@@ -81,7 +81,7 @@ public class CharacterControl : MonoBehaviour
     {
         currentHealth = maxHealth;
 
-        timer = FindObjectOfType<Timer>();
+        timer = FindFirstObjectByType<Timer>();
 
         // Setup Rigidbody2D if not set in inspector
         if (rb == null)
