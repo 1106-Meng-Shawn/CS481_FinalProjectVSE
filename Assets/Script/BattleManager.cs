@@ -106,4 +106,9 @@ public class BattleManager : MonoBehaviour
     {
         return player;
     }
+
+    public CharacterControl GetEnemyCharacterControl()
+    {
+        return enemy;
+    }
 }

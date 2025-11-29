@@ -14,6 +14,8 @@ public enum CharacterState
 
 public class CharacterControl : MonoBehaviour
 {
+    private Timer timer;
+
     [Header("Character Setup")]
     PreviewCharacter previewCharacter;
     [SerializeField] bool isPlayer = false;
@@ -78,6 +80,8 @@ public class CharacterControl : MonoBehaviour
     void Awake()
     {
         currentHealth = maxHealth;
+
+        timer = FindObjectOfType<Timer>();
 
         // Setup Rigidbody2D if not set in inspector
         if (rb == null)
@@ -599,6 +603,10 @@ public class CharacterControl : MonoBehaviour
         stateLocked = true;
 
         // You can add death animation, game over logic, etc. here
+        if(timer != null)
+        {
+           timer.CheckInstantWin();
+        }
         // Example: Destroy(gameObject, 2f); // Destroy after 2 seconds
     }
 
