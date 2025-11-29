@@ -14,7 +14,7 @@ public class PauseScreen : MonoBehaviour
     void Awake()
     {
         ResumeButton.onClick.AddListener(ResumeGame);
-        //RestartButton.onClick.AddListener(RestartGame);
+        RestartButton.onClick.AddListener(RestartGame);
         MainMenuButton.onClick.AddListener(MainMenu);
         pauseScreen.SetActive(false);
         isPaused = false;
@@ -49,10 +49,11 @@ public class PauseScreen : MonoBehaviour
         isPaused = true;
     }
 
-    //void RestartGame()
-    //{
-
-    //}
+    void RestartGame()
+    {
+        Time.timeScale = 1f; // Resume time scale
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+    }
 
     void MainMenu()
     {
