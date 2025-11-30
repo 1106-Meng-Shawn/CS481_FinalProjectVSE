@@ -324,19 +324,14 @@ public class CharacterControl : MonoBehaviour
 
     float CalculateAttackUtility(float distance, float healthPercent)
     {
-        // 只有在攻击范围内才考虑攻击
         if (distance > attackRange) return 0f;
 
-        // 基础效用值
         float utility = 1.0f;
 
-        // 血量因子：血量越高越激进 (50%-100%的激进度)
         utility *= Mathf.Lerp(0.5f, 1.0f, healthPercent);
 
-        // 距离因子：越近越好
         utility *= (attackRange - distance) / attackRange;
 
-        // 在最佳攻击距离内给予额外奖励
         if (distance < attackRange * 0.7f)
         {
             utility *= 1.3f;
@@ -661,7 +656,6 @@ public class CharacterControl : MonoBehaviour
     IEnumerator SetSpriteCoroutine(Sprite sprite)
     {
         spriteRenderer.sprite = sprite;
-        // 改用 WaitForEndOfFrame 确保 sprite 完全加载
         yield return new WaitForEndOfFrame();
         UpdatePolygonColliders();
     }
