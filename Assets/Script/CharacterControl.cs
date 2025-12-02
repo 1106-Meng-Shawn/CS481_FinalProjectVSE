@@ -8,6 +8,7 @@ public enum CharacterState
     Idle,
     Move,
     Attack,
+    Attack2,
     Block,
     MoveBack
 }
@@ -259,6 +260,11 @@ public class CharacterControl : MonoBehaviour
             ChangeState(CharacterState.Attack);
             NotifyOpponentOfAction();
         }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            ChangeState(CharacterState.Attack2);
+            NotifyOpponentOfAction();
+        }
     }
 
     void HandleBlockInput()
@@ -477,6 +483,9 @@ public class CharacterControl : MonoBehaviour
             case CharacterState.Attack:
                 StartCoroutine(AttackState());
                 break;
+            case CharacterState.Attack2:
+                StartCoroutine(Attack2State());
+                break;
             case CharacterState.Block:
                 StartCoroutine(BlockState());
                 break;
@@ -503,6 +512,22 @@ public class CharacterControl : MonoBehaviour
         ChangeState(CharacterState.Idle);
     }
 
+    IEnumerator Attack2State()
+    {
+        stateLocked = true;
+        hasDealtDamageThisAttack = false;
+
+        if (rb != null)
+            rb.linearVelocity = Vector2.zero;
+
+        SetSprite(previewCharacter.Attack2);
+
+        yield return new WaitForSeconds(attackDuration);
+
+        stateLocked = false;
+        needsNewDecision = true;
+        ChangeState(CharacterState.Idle);
+    }
     IEnumerator BlockState()
     {
         stateLocked = true;
@@ -527,7 +552,7 @@ public class CharacterControl : MonoBehaviour
     {
         // Only the attack collider (trigger) will call this
         // Check if this character is in attack state
-        if (currentState == CharacterState.Attack && !hasDealtDamageThisAttack)
+        if ((currentState == CharacterState.Attack || currentState == CharacterState.Attack2) && !hasDealtDamageThisAttack)
         {
             // Try to get CharacterControl component from the collided object
             CharacterControl targetCharacter = collision.GetComponent<CharacterControl>();
@@ -597,8 +622,34 @@ public class CharacterControl : MonoBehaviour
         // Disable controls
         stateLocked = true;
 
+        // Show lose to the defeated character
+        if (previewCharacter != null && previewCharacter.Lose != null)
+        {
+            SetSprite(previewCharacter.Lose);
+        }
+
+        // If player loses, then show enemy win animation
+        if (isPlayer)
+        {
+            var enemy = BattleManager.Instance.GetEnemyCharacterControl();
+            if (enemy != null && enemy.previewCharacter.Win != null)
+            {
+                enemy.SetSprite(enemy.previewCharacter.Win);
+            }
+        }
+
+        //if enemy loses, then show player win animation
+        else
+        {
+            var player = BattleManager.Instance.GetPlayerCharacterControl();
+            if (player != null && player.previewCharacter.Win != null)
+            {
+                player.SetSprite(player.previewCharacter.Win);
+            }
+        }
+
         // You can add death animation, game over logic, etc. here
-        if(timer != null)
+        if (timer != null)
         {
            timer.CheckInstantWin();
         }
