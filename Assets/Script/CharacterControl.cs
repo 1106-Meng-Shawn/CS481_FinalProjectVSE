@@ -31,8 +31,11 @@ public class CharacterControl : MonoBehaviour
     [Header("Combat")]
     [SerializeField] float attackDuration = 0.5f;
     [SerializeField] float blockDuration = 1f;
+    [SerializeField] float attack2Duration = 0.25f; // Time until attack hits
+    [SerializeField] float Attack2Damage = 5f; // Damage dealt by Attack2
     [SerializeField] float maxHealth = 100f;
     [SerializeField] float attackDamage = 20f; // Damage dealt per attack
+    [SerializeField] float hurtDuration = 0.125f;
     private float currentHealth;
     public System.Action<float, float> OnHealthChanged;
 
@@ -522,7 +525,7 @@ public class CharacterControl : MonoBehaviour
 
         SetSprite(previewCharacter.Attack2);
 
-        yield return new WaitForSeconds(attackDuration);
+        yield return new WaitForSeconds(attack2Duration);
 
         stateLocked = false;
         needsNewDecision = true;
@@ -559,6 +562,10 @@ public class CharacterControl : MonoBehaviour
 
             if (targetCharacter != null && targetCharacter != this)
             {
+                float damageToDeal = (currentState == CharacterState.Attack2)
+                              ? Attack2Damage          // Light attack damage
+                              : attackDamage;           // Heavy attack damage
+
                 // Check if target is blocking
                 if (targetCharacter.GetCurrentState() == CharacterState.Block)
                 {
@@ -569,7 +576,7 @@ public class CharacterControl : MonoBehaviour
                 else
                 {
                     // Normal attack - deal full damage
-                    targetCharacter.TakeDamage(attackDamage);
+                    targetCharacter.TakeDamage(damageToDeal);
                     Debug.Log($"{gameObject.name} hit {targetCharacter.gameObject.name} for {attackDamage} damage!");
                 }
 
@@ -677,14 +684,14 @@ public class CharacterControl : MonoBehaviour
             Color originalColor = spriteRenderer.color;
             spriteRenderer.color = Color.red;
 
-            yield return new WaitForSeconds(attackDuration / 2f);
+            yield return new WaitForSeconds(hurtDuration / 2f);
 
             spriteRenderer.color = originalColor;
             isHurt = false;
             yield break;
         }
 
-        yield return new WaitForSeconds(attackDuration / 2f);
+        yield return new WaitForSeconds(hurtDuration / 2f);
 
         SetSprite(originalSprite);
         isHurt = false;
