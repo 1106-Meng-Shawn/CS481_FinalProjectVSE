@@ -59,7 +59,7 @@ public class CharacterControl : MonoBehaviour
 
     [Header("AI Settings")]
      float aiDecisionCooldown = 0.1f;
-     float attackRange = 4f; 
+     float attackRange = 6.5f; 
      float safeDistance = 6f; 
 
 
@@ -301,14 +301,77 @@ public class CharacterControl : MonoBehaviour
         float distanceToPlayer = Vector2.Distance(transform.position, playerTransform.position);
         float healthPercent = currentHealth / maxHealth;
 
+        // --- REACTION LOGIC: AI immediately reacts to player's actions ---
+        CharacterState playerState = playerControl.GetCurrentState();
+
+        // 1. Player is attacking → AI tries to block
+        if (playerState == CharacterState.Attack || playerState == CharacterState.Attack2 && Random.value < 0.5f)
+        {
+            // If close enough, block immediately
+            if (distanceToPlayer < attackRange * 1.3f)
+            {
+                ChangeState(CharacterState.Block);
+                needsNewDecision = true;
+                return; // Skip normal decision-making
+            }
+
+            // If far away, AI moves back to avoid attack
+            if (distanceToPlayer < safeDistance)
+            {
+                ChangeState(CharacterState.MoveBack);
+                needsNewDecision = true;
+                return;
+            }
+        }
+
+        // Block more often when low HP
+        if (healthPercent < 0.25f && distanceToPlayer < attackRange)
+        {
+            ChangeState(CharacterState.Block);
+            needsNewDecision = true;
+            return;
+        }
+
+        //attack logic for AI
+        if (distanceToPlayer < attackRange * 1.1f)
+        {
+            if (Random.value < 0.5f)
+            {
+                ChangeState(CharacterState.Attack2);
+            }
+            else
+            {
+                ChangeState(CharacterState.Attack);
+            }
+
+            needsNewDecision = true;
+            return; // Skip the utility system
+        }
+
         // Calculate utility scores for each possible action
         Dictionary<CharacterState, float> utilities = new Dictionary<CharacterState, float>();
 
         utilities[CharacterState.Attack] = CalculateAttackUtility(distanceToPlayer, healthPercent);
+        utilities[CharacterState.Attack2] = CalculateAttack2Utility(distanceToPlayer, healthPercent);
         utilities[CharacterState.Move] = CalculateMoveTowardUtility(distanceToPlayer, healthPercent);
         utilities[CharacterState.MoveBack] = CalculateMoveAwayUtility(distanceToPlayer, healthPercent);
-        utilities[CharacterState.Block] = 0f; CalculateBlockUtility(distanceToPlayer, healthPercent);
-        utilities[CharacterState.Idle] = 0.1f;
+        utilities[CharacterState.Block] = CalculateBlockUtility(distanceToPlayer, healthPercent);
+        utilities[CharacterState.Idle] = 0.25f;
+
+        // If player is attacking → increase block + retreat
+        if (playerState == CharacterState.Attack || playerState == CharacterState.Attack2)
+        {
+            utilities[CharacterState.Block] *= 2f;
+            //utilities[CharacterState.MoveBack] *= 2f;
+        }
+
+        // Low HP, prioritize blocking (defensive)
+        if (healthPercent < 0.3f)
+        {
+            utilities[CharacterState.Block] *= 2f;
+            utilities[CharacterState.MoveBack] *= 2f;
+            utilities[CharacterState.Attack] *= 0.6f;
+        }
 
         // Debug output - 可以注释掉
         Debug.Log($"AI Decision - Distance: {distanceToPlayer:F2} and attak Range =={attackRange}, Health: {healthPercent:F2}%");
@@ -339,7 +402,29 @@ public class CharacterControl : MonoBehaviour
 
         utility *= Mathf.Lerp(0.5f, 1.0f, healthPercent);
 
-        utility *= (attackRange - distance) / attackRange;
+        //utility *= (attackRange - distance) / attackRange;
+
+        utility *= Mathf.Clamp01((attackRange - distance * 0.7f) / attackRange);
+
+        if (distance < attackRange * 0.7f)
+        {
+            utility *= 1.3f;
+        }
+
+        return utility;
+    }
+
+    float CalculateAttack2Utility(float distance, float healthPercent)
+    {
+        if (distance > attackRange) return 0f;
+
+        float utility = 0.9f;
+
+        utility *= Mathf.Lerp(0.5f, 1.0f, healthPercent);
+
+        //utility *= (attackRange - distance) / attackRange;
+
+        utility *= Mathf.Clamp01((attackRange - distance * 0.7f) / attackRange);
 
         if (distance < attackRange * 0.7f)
         {
@@ -351,7 +436,7 @@ public class CharacterControl : MonoBehaviour
 
     float CalculateMoveTowardUtility(float distance, float healthPercent)
     {
-        if (distance < attackRange + 1f) return 0f;
+        if (distance < attackRange * 1.2f) return 0f;
 
         float utility = 0.7f;
         utility *= healthPercent; // More willing to approach when healthy
@@ -368,10 +453,12 @@ public class CharacterControl : MonoBehaviour
         utility *= Mathf.Clamp01(1f - distance / safeDistance);
 
         // Extra incentive to retreat if very close
-        if (distance < attackRange * 0.5f)
+        if (distance < attackRange * 0.8f)
         {
-            utility *= 2f;
+            utility += 0.3f;
         }
+
+        utility *= Mathf.Clamp01((attackRange - distance) / attackRange);
 
         return utility;
     }
@@ -379,13 +466,13 @@ public class CharacterControl : MonoBehaviour
     float CalculateBlockUtility(float distance, float healthPercent)
     {
         // Don't block if player is far away
-        if (distance > attackRange * 1.5f) return 0f;
+        if (distance > attackRange * 1.2f) return 0f;
 
         float utility = 0.5f;
-        utility *= (1f - healthPercent * 0.5f); // More defensive when damaged
+        utility *= (1f - healthPercent * 0.4f); // More defensive when damaged
 
         // Strongly prefer blocking if player is attacking
-        if (playerControl != null && playerControl.GetCurrentState() == CharacterState.Attack)
+        if (playerControl != null && playerControl.GetCurrentState() == CharacterState.Attack || playerControl.GetCurrentState() == CharacterState.Attack2)
         {
             utility *= 3f;
         }
