@@ -36,6 +36,15 @@ public class CharacterControl : MonoBehaviour
     [SerializeField] float maxHealth = 100f;
     [SerializeField] float attackDamage = 20f; // Damage dealt per attack
     [SerializeField] float hurtDuration = 0.125f;
+
+    [Header("Audio")]
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip attackSFX;
+    [SerializeField] AudioClip attack2SFX;
+    [SerializeField] AudioClip blockSFX;
+    [SerializeField] AudioClip victorySFX;
+    [SerializeField] AudioClip defeatSFX;
+
     private float currentHealth;
     public System.Action<float, float> OnHealthChanged;
 
@@ -110,6 +119,13 @@ public class CharacterControl : MonoBehaviour
         SetupColliders();
     }
 
+    void PlaySFX(AudioClip clip)
+    {
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+    }
     void SetupColliders()
     {
         PolygonCollider2D[] colliders = GetComponents<PolygonCollider2D>();
@@ -261,11 +277,13 @@ public class CharacterControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.J))
         {
             ChangeState(CharacterState.Attack);
+            VolumeManager.Instance.PlaySFX(attackSFX);
             NotifyOpponentOfAction();
         }
         if (Input.GetKeyDown(KeyCode.N))
         {
             ChangeState(CharacterState.Attack2);
+            VolumeManager.Instance.PlaySFX(attack2SFX);
             NotifyOpponentOfAction();
         }
     }
@@ -275,6 +293,7 @@ public class CharacterControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             ChangeState(CharacterState.Block);
+            VolumeManager.Instance.PlaySFX(blockSFX);
         }
     }
 
@@ -333,7 +352,7 @@ public class CharacterControl : MonoBehaviour
         }
 
         //attack logic for AI
-        if (distanceToPlayer < attackRange * 1.1f)
+        if (distanceToPlayer < attackRange * 1.0f)
         {
             if (Random.value < 0.5f)
             {
@@ -356,13 +375,20 @@ public class CharacterControl : MonoBehaviour
         utilities[CharacterState.Move] = CalculateMoveTowardUtility(distanceToPlayer, healthPercent);
         utilities[CharacterState.MoveBack] = CalculateMoveAwayUtility(distanceToPlayer, healthPercent);
         utilities[CharacterState.Block] = CalculateBlockUtility(distanceToPlayer, healthPercent);
-        utilities[CharacterState.Idle] = 0.25f;
+        utilities[CharacterState.Idle] = 0.2f;
 
         // If player is attacking → increase block + retreat
         if (playerState == CharacterState.Attack || playerState == CharacterState.Attack2)
         {
             utilities[CharacterState.Block] *= 2f;
-            //utilities[CharacterState.MoveBack] *= 2f;
+            utilities[CharacterState.MoveBack] *= 2f;
+        }
+
+        if (playerState == CharacterState.Attack && distanceToPlayer > attackRange)
+        {
+            utilities[CharacterState.Move] *= 2.5f;
+            utilities[CharacterState.Attack] *= 1.3f;
+            utilities[CharacterState.Attack2] *= 1.4f;
         }
 
         // Low HP, prioritize blocking (defensive)
@@ -371,6 +397,11 @@ public class CharacterControl : MonoBehaviour
             utilities[CharacterState.Block] *= 2f;
             utilities[CharacterState.MoveBack] *= 2f;
             utilities[CharacterState.Attack] *= 0.6f;
+        }
+
+        if (distanceToPlayer > attackRange * 1f)
+        {
+            utilities[CharacterState.Move] += 1.2f;
         }
 
         // Debug output - 可以注释掉
@@ -410,6 +441,9 @@ public class CharacterControl : MonoBehaviour
         {
             utility *= 1.3f;
         }
+
+        //if (playerControl != null && playerControl.GetCurrentState() != CharacterState.Block)
+        //    utility *= 1.5f;
 
         return utility;
     }
@@ -595,6 +629,8 @@ public class CharacterControl : MonoBehaviour
 
         SetSprite(previewCharacter.Attack0);
 
+        VolumeManager.Instance.PlaySFX(attackSFX);
+
         yield return new WaitForSeconds(attackDuration);
 
         stateLocked = false;
@@ -611,6 +647,8 @@ public class CharacterControl : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
 
         SetSprite(previewCharacter.Attack2);
+
+        VolumeManager.Instance.PlaySFX(attack2SFX);
 
         yield return new WaitForSeconds(attack2Duration);
 
@@ -629,6 +667,8 @@ public class CharacterControl : MonoBehaviour
         }
 
         SetSprite(previewCharacter.Stand);
+
+        VolumeManager.Instance.PlaySFX(blockSFX);
 
         yield return new WaitForSeconds(blockDuration);
 
@@ -657,6 +697,7 @@ public class CharacterControl : MonoBehaviour
                 if (targetCharacter.GetCurrentState() == CharacterState.Block)
                 {
                     // Blocked attack - deal reduced damage
+                    VolumeManager.Instance.PlaySFX(blockSFX);
                     targetCharacter.TakeDamage(attackDamage * 0.3f); // 30% damage when blocked
                     Debug.Log($"{gameObject.name} attack blocked by {targetCharacter.gameObject.name}! Reduced damage dealt.");
                 }
