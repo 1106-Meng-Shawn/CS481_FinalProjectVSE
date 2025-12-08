@@ -36,6 +36,7 @@ public class BattleManager : MonoBehaviour
 
     public void InitBattle(PreviewCharacter playerCharacter, PreviewCharacter enemyCharacter)
     {
+        VolumeManager.Instance.swapMusic(VolumeManager.Instance.bgmBattle, true);
         this.player = Instantiate(PlayerPrefab, transform);
         this.player.SetCharacter(playerCharacter);
 

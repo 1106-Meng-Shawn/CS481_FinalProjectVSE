@@ -16,7 +16,7 @@ public class VolumeManager : MonoBehaviour
     [Header("Audio Clips")]
     public AudioClip bgmMainMenu;
     public AudioClip bgmLevel1;
-    public AudioClip bgmLevel2;
+    public AudioClip bgmBattle;
     public AudioClip bgmVictory;
     public AudioClip bgmDefeat;
 
@@ -50,6 +50,12 @@ public class VolumeManager : MonoBehaviour
         musicSource.loop = true;
         musicSource.playOnAwake = false;
         musicSource.volume = musicVolume;
+        
+        // Audio Muffler Managements
+        var lowPass = gameObject.AddComponent<AudioLowPassFilter>();
+        lowPass.cutoffFrequency = 22000f; // default – no muffling initially
+        lowPass.lowpassResonanceQ = 1f;   // default resonance
+
 
         sfxSource = gameObject.AddComponent<AudioSource>();
         sfxSource.loop = false;
@@ -86,7 +92,7 @@ public class VolumeManager : MonoBehaviour
         {
             "MainMenu" => bgmMainMenu,
             "BattleScene" => bgmLevel1,
-            "Level2" => bgmLevel2,
+            "Level2" => bgmBattle,
             _ => bgmMainMenu
         };
 
@@ -95,7 +101,7 @@ public class VolumeManager : MonoBehaviour
             int customIndex = PlayerPrefs.GetInt("NextLevelMusicIndex", -1);
             if (customIndex >= 0)
             {
-                AudioClip[] options = { bgmLevel1, bgmLevel2 };
+                AudioClip[] options = { bgmLevel1, bgmBattle };
                 if (customIndex < options.Length)
                 {
                     StopAllCoroutines();
@@ -196,5 +202,25 @@ public class VolumeManager : MonoBehaviour
         sfxVolume = Mathf.Clamp01(vol);
         if (sfxSource != null)
             sfxSource.volume = sfxVolume;
+    }
+
+    public void swapMusic(AudioClip music, bool loop = true)
+    {
+        if (musicSource.clip == music)
+        {
+            return; // Already playing this Track
+        }
+
+        StopAllCoroutines();
+        StartCoroutine(FadeMusicCoroutine(music, loop));
+    }
+
+    public void Muffle(bool muffled)
+    {
+        var filter = musicSource.GetComponent<AudioLowPassFilter>();
+        if (filter != null)
+        {
+            filter.cutoffFrequency = muffled ?  800f : 22000f;
+        }
     }
 }

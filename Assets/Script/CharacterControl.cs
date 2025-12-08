@@ -725,6 +725,7 @@ public class CharacterControl : MonoBehaviour
         // If player loses, then show enemy win animation
         if (isPlayer)
         {
+            VolumeManager.Instance.swapMusic(VolumeManager.Instance.bgmVictory, false);
             var enemy = BattleManager.Instance.GetEnemyCharacterControl();
             if (enemy != null && enemy.previewCharacter.Win != null)
             {
@@ -735,6 +736,7 @@ public class CharacterControl : MonoBehaviour
         //if enemy loses, then show player win animation
         else
         {
+            VolumeManager.Instance.swapMusic(VolumeManager.Instance.bgmDefeat, false);
             var player = BattleManager.Instance.GetPlayerCharacterControl();
             if (player != null && player.previewCharacter.Win != null)
             {

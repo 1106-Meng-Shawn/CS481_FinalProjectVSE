@@ -4294,7 +4294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmMainMenu: {fileID: 8300000, guid: 0559a10dd4ee15a4bba89214af8fa957, type: 3}
   bgmLevel1: {fileID: 8300000, guid: 8d1501a4ba366b74bbf4c4b44be2f94a, type: 3}
-  bgmLevel2: {fileID: 0}
+  bgmBattle: {fileID: 8300000, guid: db5aed48c05b791459af360f31a66975, type: 3}
   bgmVictory: {fileID: 0}
   bgmDefeat: {fileID: 0}
   buttonClick: {fileID: 8300000, guid: b87a2a9c15bbd7e44b9fdda46f159f71, type: 3}

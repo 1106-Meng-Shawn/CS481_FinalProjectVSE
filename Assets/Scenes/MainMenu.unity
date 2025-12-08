@@ -1080,9 +1080,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bgmMainMenu: {fileID: 8300000, guid: 0559a10dd4ee15a4bba89214af8fa957, type: 3}
   bgmLevel1: {fileID: 8300000, guid: 8d1501a4ba366b74bbf4c4b44be2f94a, type: 3}
-  bgmLevel2: {fileID: 0}
-  bgmVictory: {fileID: 0}
-  bgmDefeat: {fileID: 0}
+  bgmBattle: {fileID: 8300000, guid: db5aed48c05b791459af360f31a66975, type: 3}
+  bgmVictory: {fileID: 8300000, guid: d9de77eb29a971a499b8d84de167a2c0, type: 3}
+  bgmDefeat: {fileID: 8300000, guid: 37bbaf6556a1ed34d8b6c75e064c6af2, type: 3}
   buttonClick: {fileID: 8300000, guid: b87a2a9c15bbd7e44b9fdda46f159f71, type: 3}
   charaClick: {fileID: 8300000, guid: a18b1de35a7266a499443cc215df3542, type: 3}
   musicVolume: 0.5

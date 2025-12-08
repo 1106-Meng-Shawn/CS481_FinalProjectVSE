@@ -11,6 +11,7 @@ public class PauseScreen : MonoBehaviour
     bool isPaused = false;
 
 
+
     void Awake()
     {
         ResumeButton.onClick.AddListener(ResumeGame);
@@ -37,6 +38,7 @@ public class PauseScreen : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void ResumeGame()
     {
+        VolumeManager.Instance.Muffle(false);
         pauseScreen.SetActive(false); //deactivates the pauseScreen and unpauses the screen
         Time.timeScale = 1f; //game starts running again
         isPaused = false;
@@ -44,6 +46,7 @@ public class PauseScreen : MonoBehaviour
 
     void PauseGame()
     {
+        VolumeManager.Instance.Muffle(true);
         pauseScreen.SetActive(true); //activates the pauseScreen and pauses the screen
         Time.timeScale = 0f; //game stops running.
         isPaused = true;
@@ -51,12 +54,14 @@ public class PauseScreen : MonoBehaviour
 
     void RestartGame()
     {
+        VolumeManager.Instance.Muffle(false);
         Time.timeScale = 1f; // Resume time scale
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 
     void MainMenu()
     {
+        VolumeManager.Instance.Muffle(false);
         SceneManager.LoadScene("MainMenu");
     }
 }
