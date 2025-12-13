@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public static class InitData
 {
@@ -17,7 +18,10 @@ public class BattleManager : MonoBehaviour
     public PreviewCharacters CharactersLibrary;
 
     [SerializeField] Slider playerHealth;
+    [SerializeField] TextMeshProUGUI playerHealthText;
     [SerializeField] Slider enemyHealth;
+    [SerializeField] TextMeshProUGUI enemyHealthText;
+
 
     CharacterControl player;
     CharacterControl enemy;
@@ -33,6 +37,12 @@ public class BattleManager : MonoBehaviour
         }
         Instance = this;
     }
+
+    private void Start()
+    {
+        InitHealthUI();
+    }
+
 
     public void InitBattle(PreviewCharacter playerCharacter, PreviewCharacter enemyCharacter)
     {
@@ -56,6 +66,10 @@ public class BattleManager : MonoBehaviour
 
     void InitHealthUI()
     {
+
+        playerHealthText.text = "0 / 0";
+        enemyHealthText.text = "0 / 0";
+
         if (playerHealth != null && player != null)
         {
             playerHealth.maxValue = player.MaxHealth;
@@ -71,22 +85,27 @@ public class BattleManager : MonoBehaviour
 
             enemy.OnHealthChanged += UpdateEnemyHealth;
             enemy.InitializeHealth();
+
         }
     }
 
-    void UpdatePlayerHealth(float currentHealth, float maxHealth)
+    public void UpdatePlayerHealth(float currentHealth, float maxHealth)
     {
         if (playerHealth != null)
         {
+            playerHealth.maxValue = maxHealth;
             playerHealth.value = currentHealth;
+            playerHealthText.text = $"{currentHealth.ToString("N0")} / {maxHealth.ToString("N0")}";
         }
     }
-
-    void UpdateEnemyHealth(float currentHealth, float maxHealth)
+    public void UpdateEnemyHealth(float currentHealth, float maxHealth)
     {
         if (enemyHealth != null)
         {
+            enemyHealth.maxValue = maxHealth;
             enemyHealth.value = currentHealth;
+            enemyHealthText.text = $"{currentHealth.ToString("N0")} / {maxHealth.ToString("N0")}";
+
         }
     }
 

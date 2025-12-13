@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3987122059421058450}
   - component: {fileID: 1165288587762806638}
-  - component: {fileID: 8210826018446605179}
   - component: {fileID: 76984257451843541}
   - component: {fileID: 5951009274536870637}
   - component: {fileID: 4474777269194402746}
+  - component: {fileID: 5302465127549707851}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -92,39 +92,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8210826018446605179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5986715439828868316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fff9ec794a42957419af5a2a8ef39818, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPlayer: 1
-  spriteRenderer: {fileID: 1165288587762806638}
-  rb: {fileID: 0}
-  moveSpeed: 5
-  attackDuration: 0.5
-  blockDuration: 1
-  attack2Duration: 0.25
-  Attack2Damage: 5
-  maxHealth: 100
-  attackDamage: 20
-  hurtDuration: 0.125
-  audioSource: {fileID: 4474777269194402746}
-  attackSFX: {fileID: 8300000, guid: c266e86e5ec11e344bf66dede26cbc46, type: 3}
-  attack2SFX: {fileID: 8300000, guid: 4d4ef7516a431934681038a3dc391e55, type: 3}
-  blockSFX: {fileID: 8300000, guid: 0e270ecb84908054a9d6f727dbea974e, type: 3}
-  victorySFX: {fileID: 0}
-  defeatSFX: {fileID: 0}
-  title: {fileID: 1161008028387062486}
-  titleOffsetY: 0.5
-  physicsCollider: {fileID: 0}
-  attackCollider: {fileID: 0}
 --- !u!60 &76984257451843541
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -282,14 +249,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5986715439828868316}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
+  m_UseAutoMass: 1
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 9.8
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -398,6 +365,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5302465127549707851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5986715439828868316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a5397ab2a032e64192b2c7e4dcc1e68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 1165288587762806638}
+  rb: {fileID: 5951009274536870637}
+  title: {fileID: 1161008028387062486}
+  titleOffsetY: 0
+  physicsCollider: {fileID: 0}
 --- !u!1 &8607436885232773118
 GameObject:
   m_ObjectHideFlags: 0

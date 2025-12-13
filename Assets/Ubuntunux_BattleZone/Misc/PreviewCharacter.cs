@@ -15,18 +15,57 @@ public class PreviewCharacter : MonoBehaviour
     public Sprite Attack1;
     public Sprite Attack2;
     public Sprite Portrait;
-    public Sprite PortraitLose;    
+    public Sprite PortraitLose;
     public Sprite Stand;
 
-    // Start is called before the first frame update
+    [Header("Movement")]
+    [SerializeField] public float moveSpeed = 5f;
+
+    [Header("Combat")]
+    [SerializeField] public float attackDuration = 0.75f;
+    [SerializeField] public float attack1Duration = 0.5f;
+    [SerializeField] public float attack2Duration = 0.25f;
+    [SerializeField] public float blockDuration = 1f;
+    [SerializeField] public float HealDuration = 2f;
+    [SerializeField] public float maxHealth = 100f;
+    [SerializeField] public float AttackDamage = 20f;
+    [SerializeField] public float Attack1Damage = 10f;
+    [SerializeField] public float Attack2Damage = 5f;
+    [SerializeField] public float hurtDuration = 0.125f;
+    [SerializeField] public float HealAmount = 1f;
+    [SerializeField][Range(0f, 10f)] public int jumpForce = 10;
+
+    [SerializeField][Range(0f, 1f)] public float blockReduction = 0.3f;
+
+
+    [Header("Audio")]
+    [SerializeField] public AudioSource audioSource;
+    [SerializeField] public AudioClip attackSFX;
+    [SerializeField] public AudioClip attack1SFX;
+    [SerializeField] public AudioClip attack2SFX;
+    [SerializeField] public AudioClip blockSFX;
+    [SerializeField] public AudioClip victorySFX;
+    [SerializeField] public AudioClip defeatSFX;
+
+    [Header("AI Personality")]
+    [SerializeField][Range(0f, 1f)] public float aggressiveness = 0.5f;
+    [SerializeField][Range(0f, 1f)] public float healThreshold = 0.3f;
+    [SerializeField][Range(0f, 1f)] public float jumpAttackChance = 0.3f;
+
+    [Header("AI Action Tendencies")]
+    [SerializeField][Range(0f, 10f)] public float attack0Tendency = 10f;
+    [SerializeField][Range(0f, 10f)] public float attack1Tendency = 10f;
+    [SerializeField][Range(0f, 10f)] public float attack2Tendency = 10f;
+    [SerializeField][Range(0f, 10f)] public float blockTendency = 1f;
+    [SerializeField][Range(0f, 10f)] public float healTendency = 1f;
+    [SerializeField][Range(0f, 10f)] public float attackTendency = 10f;
+    [SerializeField][Range(0f, 10f)] public float retreatTendency = 1f;
+
     void Start()
     {
-        
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
     }
 }

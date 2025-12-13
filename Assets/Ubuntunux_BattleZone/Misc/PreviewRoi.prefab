@@ -24,12 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2156123483828537361}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.7223482, y: -4.6230326, z: -4.341667}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2156123483828537366
 MonoBehaviour:
@@ -55,3 +56,34 @@ MonoBehaviour:
   Portrait: {fileID: 21300000, guid: 4b19d76737f3cfc41b93e8311c356f92, type: 3}
   PortraitLose: {fileID: 21300000, guid: a779c93bdd1263e1b90d71c730ce4e7e, type: 3}
   Stand: {fileID: 21300000, guid: 8aea1674d58ff752facfaa7019bd2ca6, type: 3}
+  moveSpeed: 5
+  attackDuration: 0.75
+  attack1Duration: 0.5
+  attack2Duration: 0.25
+  blockDuration: 1
+  HealDuration: 2
+  maxHealth: 100
+  AttackDamage: 20
+  Attack1Damage: 10
+  Attack2Damage: 5
+  hurtDuration: 0.125
+  HealAmount: 1
+  jumpForce: 10
+  blockReduction: 0.3
+  audioSource: {fileID: 0}
+  attackSFX: {fileID: 0}
+  attack1SFX: {fileID: 0}
+  attack2SFX: {fileID: 0}
+  blockSFX: {fileID: 0}
+  victorySFX: {fileID: 0}
+  defeatSFX: {fileID: 0}
+  aggressiveness: 0.5
+  healThreshold: 0.3
+  jumpAttackChance: 0.3
+  attack0Tendency: 2
+  attack1Tendency: 2
+  attack2Tendency: 2
+  blockTendency: 1
+  healTendency: 1
+  attackTendency: 2
+  retreatTendency: 1

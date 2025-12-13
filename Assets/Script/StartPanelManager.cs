@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TMPro;
 
 public class StartPanelManager : MonoBehaviour
 {
@@ -22,6 +22,7 @@ public class StartPanelManager : MonoBehaviour
         public Button SelectButton;
         public Button RandomButton;
         public bool isPlayer;
+        public TextMeshProUGUI characterValueText;
 
     }
 
@@ -44,6 +45,7 @@ public class StartPanelManager : MonoBehaviour
 
     }
 
+    public TextMeshProUGUI operatingInstructionsText;
 
 
 
@@ -72,8 +74,22 @@ public class StartPanelManager : MonoBehaviour
         InitButtons();
         SetScrollRectButtons();
         panel.SetActive(true);
+        SetOperatingInstructionsText();
     }
 
+    void SetOperatingInstructionsText()
+    {
+        operatingInstructionsText.text =
+            $"<b>Controls:</b>\n" +
+            $"- Move Left: <color=#00FFFF>{PlayerControl.playerLeftMove}</color>\n" +
+            $"- Move Right: <color=#00FFFF>{PlayerControl.playerRightMove}</color>\n" +
+            $"- Attack 0: <color=#FF0000>{PlayerControl.playerAttack0}</color>\n" +
+            $"- Attack 1: <color=#FF4500>{PlayerControl.playerAttack1}</color>\n" +
+            $"- Attack 2: <color=#FF6347>{PlayerControl.playerAttack2}</color>\n" +
+            $"- Block: <color=#32CD32>{PlayerControl.playerBlock}</color>\n" +
+            $"- Heal: <color=#00FF00>{PlayerControl.playerHeal}</color>\n" +
+            $"- Jump: <color=#1E90FF>{PlayerControl.playerJump}</color>";
+    }
 
     void InitSel()
     {
@@ -131,12 +147,16 @@ public class StartPanelManager : MonoBehaviour
         }
     }
 
+
+
     void InitPlayerSel(PreviewCharacter currentCharacter)
     {
         playerSel.currentCharacter = currentCharacter;
         playerSel.characterIcon.sprite = currentCharacter.Portrait;
         playerSel.SelectButton.onClick.AddListener(() => OnSelectButtonClick(true));
         playerSel.RandomButton.onClick.AddListener(() => OnRandomButtonClick(playerSel));
+        SetDamageInfoText(true);
+
     }
 
     void InitEnemySel(PreviewCharacter currentCharacter)
@@ -145,8 +165,45 @@ public class StartPanelManager : MonoBehaviour
         enemySel.characterIcon.sprite = currentCharacter.Portrait;
         enemySel.SelectButton.onClick.AddListener(() => OnSelectButtonClick(false));
         enemySel.RandomButton.onClick.AddListener(() => OnRandomButtonClick(enemySel));
+        SetDamageInfoText(false);
     }
 
+
+    void SetDamageInfoText(bool isPlayer)
+    {
+        TextMeshProUGUI valueText;
+        PreviewCharacter newCharacter;
+
+        if (isPlayer)
+        {
+            valueText = playerSel.characterValueText;
+            newCharacter = playerSel.currentCharacter;
+            BattleManager.Instance.UpdatePlayerHealth(newCharacter.maxHealth, newCharacter.maxHealth);
+
+        }
+        else
+        {
+            valueText = enemySel.characterValueText;
+            newCharacter = enemySel.currentCharacter;
+            BattleManager.Instance.UpdateEnemyHealth(newCharacter.maxHealth, newCharacter.maxHealth);
+
+        }
+
+
+        valueText.text =
+            $"<b>Damage Information:</b>\n" +
+            $"- Move Speed: <color=#00FFFF>{newCharacter.moveSpeed}</color>\n" +
+            $"- Attack 0: <color=#FF0000>{newCharacter.AttackDamage} HP</color> (Duration: <color=#FFA500>{newCharacter.attackDuration}s</color>)\n" +
+            $"- Attack 1: <color=#FF4500>{newCharacter.Attack1Damage} HP</color> (Duration: <color=#FFA500>{newCharacter.attack1Duration}s</color>)\n" +
+            $"- Attack 2: <color=#FF6347>{newCharacter.Attack2Damage} HP</color> (Duration: <color=#FFA500>{newCharacter.attack2Duration}s</color>)\n" +
+            $"- Block: Reduces incoming damage by <color=#32CD32>{(newCharacter.blockReduction * 100).ToString("N0")}%</color> (Duration: <color=#FFA500>{newCharacter.blockDuration}s</color>)\n" +
+            $"- Heal: Restores <color=#00FF00>{newCharacter.HealAmount} HP</color> (Duration: <color=#FFA500>{newCharacter.HealDuration}s</color>)\n" +
+            //$"- Max Health: <color=#FF69B4>{newCharacter.maxHealth}</color>\n" +
+            $"- Jump Force: <color=#1E90FF>{newCharacter.jumpForce}</color>";
+
+
+
+    }
 
 
     void OnSelectButtonClick(bool isPlayer)
@@ -168,11 +225,14 @@ public class StartPanelManager : MonoBehaviour
         {
             playerSel.currentCharacter = newCharacter;
             playerSel.characterIcon.sprite = newCharacter.Portrait;
+            SetDamageInfoText(true);
         }
         else
         {
             enemySel.currentCharacter = newCharacter;
             enemySel.characterIcon.sprite = newCharacter.Portrait;
+            SetDamageInfoText(false);
+
 
         }
     }
