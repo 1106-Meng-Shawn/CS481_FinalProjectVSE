@@ -318,7 +318,7 @@ public class CharacterControl_Enemy : CharacterControl
     {
         base.OnCharacterDeath();
 
-        VolumeManager.Instance.swapMusic(VolumeManager.Instance.bgmDefeat, false);
+        VolumeManager.Instance.swapMusic(VolumeManager.Instance.bgmVictory, false);
 
         var player = BattleManager.Instance.GetPlayerCharacterControl();
         if (player != null)

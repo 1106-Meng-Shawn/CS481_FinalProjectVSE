@@ -23,6 +23,18 @@ public class VolumeManager : MonoBehaviour
     [Header("SFX Clips")]
     public AudioClip buttonClick;
     public AudioClip charaClick;
+    public AudioClip normHit;
+    public AudioClip normHit2;
+    public AudioClip normHit3;
+    public AudioClip healing;
+    public AudioClip KO;
+    public AudioClip blockhit;
+    public AudioClip HurryUp;
+    public AudioClip PerfectWin;
+    public AudioClip timeUP;
+    public AudioClip youWin;
+    public AudioClip youLose;
+    public AudioClip draw;
 
     [Header("Volumes")]
     [Range(0f, 1f)] public float musicVolume = 0.5f;
@@ -187,8 +199,28 @@ public class VolumeManager : MonoBehaviour
         sfxSource.PlayOneShot(clip, sfxVolume);
     }
 
+    public void PlaySFX(AudioClip clip, float volumeScale)
+{
+    if (clip == null) return;
+    float finalVol = Mathf.Clamp01(volumeScale * sfxVolume);
+    sfxSource.PlayOneShot(clip, finalVol);
+}
+
+
     public void PlayButtonClick() => PlaySFX(buttonClick);
     public void PlayCharaClick() => PlaySFX(charaClick);
+    public void playHit1() => PlaySFX(normHit);
+    public void playHit2() => PlaySFX(normHit2);
+    public void playHit3() => PlaySFX(normHit3);
+    public void playHealing() => PlaySFX(healing);
+    public void playBlock() => PlaySFX(blockhit, 0.5f);
+    public void playKO() => PlaySFX(KO);
+    public void playHurry() => PlaySFX(HurryUp);
+    public void playPerfectWin() => PlaySFX(PerfectWin);
+    public void playTimeUp() => PlaySFX(timeUP);
+    public void playWin() => PlaySFX(youWin);
+    public void playLose() => PlaySFX(youLose);
+    public void playDraw() => PlaySFX(draw);
 
     public void SetMusicVolume(float vol)
     {

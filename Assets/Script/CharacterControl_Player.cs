@@ -94,6 +94,7 @@ public class CharacterControl_Player : CharacterControl
         {
             if (!isHealing)
             {
+                //VolumeManager.Instance.playHealing();
                 StartHealing();
             }
         }
@@ -110,7 +111,7 @@ public class CharacterControl_Player : CharacterControl
     {
         base.OnCharacterDeath();
 
-        VolumeManager.Instance.swapMusic(VolumeManager.Instance.bgmVictory, false);
+        VolumeManager.Instance.swapMusic(VolumeManager.Instance.bgmDefeat, false);
 
         var enemy = BattleManager.Instance.GetEnemyCharacterControl();
         if (enemy != null)

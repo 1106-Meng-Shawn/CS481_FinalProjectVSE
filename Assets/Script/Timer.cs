@@ -11,7 +11,9 @@ public class Timer : MonoBehaviour
     public TextMeshProUGUI drawText;
     private float startTime;
     private float maxTime = 60f; // 60 seconds
+    private float halfTime;
     private bool isRunning = false;
+    private bool hasHalf = false;
 
     [SerializeField] public Button restartButton;
     [SerializeField] public Button MainMenuButton;
@@ -20,6 +22,7 @@ public class Timer : MonoBehaviour
     {
         winScreen.SetActive(false);
         startTime = maxTime;
+        halfTime = startTime/2;
         isRunning = false;   // do NOT start counting
         UpdateTimer();
     }
@@ -42,10 +45,17 @@ public class Timer : MonoBehaviour
 
         startTime -= Time.deltaTime;
 
+        if(!hasHalf && startTime <= halfTime)
+        {
+            hasHalf = true;
+            VolumeManager.Instance.playHurry(); // Rushes players to wrap it up
+        }
+
         if(startTime <= 0)
         {
             startTime = 0;
             isRunning = false;
+            VolumeManager.Instance.playTimeUp();
             EndGame();
             // Timer has finished, you can add additional logic here if needed
         }
@@ -70,10 +80,12 @@ public class Timer : MonoBehaviour
 
         if (player.CurrentHealth > enemy.CurrentHealth)
         {
+            VolumeManager.Instance.playWin();
             Win();
         }
         else if (player.CurrentHealth < enemy.CurrentHealth)
         {
+            VolumeManager.Instance.playLose();
             EnemyWin();
         }
         else
@@ -141,6 +153,7 @@ public class Timer : MonoBehaviour
 
         if(player.CurrentHealth == enemy.CurrentHealth)
         {
+            VolumeManager.Instance.playDraw();
             Time.timeScale = 0f;
             winScreen.SetActive(true);
 

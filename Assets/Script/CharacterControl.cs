@@ -78,8 +78,7 @@ public abstract class CharacterControl : MonoBehaviour
 
     public virtual void StartHealing()
     {
-        if (!canHeal) return;
-        if (stateLocked) return;
+        if (!canHeal || stateLocked) return;
 
         isHealing = true;
 
@@ -391,7 +390,7 @@ public abstract class CharacterControl : MonoBehaviour
         }
 
         SetSprite(previewCharacter.Attack0);
-        VolumeManager.Instance.PlaySFX(previewCharacter.attackSFX);
+        VolumeManager.Instance.playHit1();
         yield return new WaitForSeconds(previewCharacter.attackDuration);
 
         stateLocked = false;
@@ -408,7 +407,7 @@ public abstract class CharacterControl : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
 
         SetSprite(previewCharacter.Attack1);
-        VolumeManager.Instance.PlaySFX(previewCharacter.attack1SFX);
+        VolumeManager.Instance.playHit2();
 
         yield return new WaitForSeconds(previewCharacter.attack1Duration);
 
@@ -426,7 +425,7 @@ public abstract class CharacterControl : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
 
         SetSprite(previewCharacter.Attack2);
-        VolumeManager.Instance.PlaySFX(previewCharacter.attack2SFX);
+        VolumeManager.Instance.playHit3();
 
         yield return new WaitForSeconds(previewCharacter.attack2Duration);
 
@@ -465,7 +464,6 @@ public abstract class CharacterControl : MonoBehaviour
         else
             SetSprite(previewCharacter.Stand);
 
-        VolumeManager.Instance.PlaySFX(previewCharacter.blockSFX);
 
         while (isHealing && CurrentHealth < previewCharacter.maxHealth)
         {
@@ -540,7 +538,7 @@ public abstract class CharacterControl : MonoBehaviour
 
                 if (targetCharacter.GetCurrentState() == CharacterState.Block)
                 {
-                    VolumeManager.Instance.PlaySFX(previewCharacter.blockSFX);
+                    VolumeManager.Instance.playBlock();
                     targetCharacter.TakeDamage(damageToDeal * previewCharacter.blockReduction);
                     Debug.Log($"{gameObject.name} attack blocked by {targetCharacter.gameObject.name}! Reduced damage dealt.");
                 }
@@ -638,6 +636,7 @@ public abstract class CharacterControl : MonoBehaviour
 
         stateLocked = true;
 
+        VolumeManager.Instance.playKO();
         if (previewCharacter != null && previewCharacter.Lose != null)
         {
             SetSprite(previewCharacter.Lose);
