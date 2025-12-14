@@ -10,6 +10,8 @@ public class StartPanelManager : MonoBehaviour
 
     public static StartPanelManager Instance { get; private set; }
     [SerializeField] GameObject panel;
+    [SerializeField] GameObject top;
+    [SerializeField] GameObject controlsPanel;
 
     [SerializeField] public CharacterSel playerSel;
     [SerializeField] public CharacterSel enemySel;
@@ -30,9 +32,12 @@ public class StartPanelManager : MonoBehaviour
     [SerializeField] CharacterButtonPrefabControl prefab;
     [SerializeField] Button StartButton;
     [SerializeField] Button EndButton;
+    [SerializeField] Button controlsButton;
+    [SerializeField] Button backButton;
 
     bool isPlayerSel = true;
-
+    bool isControlsPanelActive = false;
+    bool isTopPanelActive = false; 
 
     [SerializeField] public BackgroundButtons backgroundButtons;
 
@@ -74,6 +79,7 @@ public class StartPanelManager : MonoBehaviour
         InitButtons();
         SetScrollRectButtons();
         panel.SetActive(true);
+        controlsPanel.SetActive(false);
         SetOperatingInstructionsText();
     }
 
@@ -81,14 +87,14 @@ public class StartPanelManager : MonoBehaviour
     {
         operatingInstructionsText.text =
             $"<b>Controls:</b>\n" +
-            $"- Move Left: <color=#00FFFF>{PlayerControl.playerLeftMove}</color>\n" +
-            $"- Move Right: <color=#00FFFF>{PlayerControl.playerRightMove}</color>\n" +
-            $"- Attack 0: <color=#FF0000>{PlayerControl.playerAttack0}</color>\n" +
-            $"- Attack 1: <color=#FF4500>{PlayerControl.playerAttack1}</color>\n" +
-            $"- Attack 2: <color=#FF6347>{PlayerControl.playerAttack2}</color>\n" +
-            $"- Block: <color=#32CD32>{PlayerControl.playerBlock}</color>\n" +
-            $"- Heal: <color=#00FF00>{PlayerControl.playerHeal}</color>\n" +
-            $"- Jump: <color=#1E90FF>{PlayerControl.playerJump}</color>";
+            $"Move Left: <color=#00FFFF>{PlayerControl.playerLeftMove}</color>\n" +
+            $"Move Right: <color=#00FFFF>{PlayerControl.playerRightMove}</color>\n" +
+            $"Primary Attack: <color=#FF0000>{PlayerControl.playerAttack0}</color>\n" +
+            $"Secondary Attack: <color=#FF4500>{PlayerControl.playerAttack1}</color>\n" +
+            $"Third Attack: <color=#FF6347>{PlayerControl.playerAttack2}</color>\n" +
+            $"Block: <color=#32CD32>{PlayerControl.playerBlock}</color>\n" +
+            $"Heal: <color=#00FF00>{PlayerControl.playerHeal}</color>\n" +
+            $"Jump: <color=#1E90FF>{PlayerControl.playerJump}</color>";
     }
 
     void InitSel()
@@ -114,6 +120,8 @@ public class StartPanelManager : MonoBehaviour
         backgroundButtons.GrasslandButton.onClick.AddListener(() => BackgroundManager.Instance.SetBackground(BackgroundType.Grassland));
         backgroundButtons.DesertButton.onClick.AddListener(() => BackgroundManager.Instance.SetBackground(BackgroundType.Desert));
         backgroundButtons.SnowfieldButton.onClick.AddListener(()=>BackgroundManager.Instance.SetBackground(BackgroundType.Snowfield));
+        backButton.onClick.AddListener(onBackButtonClick);
+        controlsButton.onClick.AddListener(onControlsButtonClick);
     }
 
 
@@ -135,7 +143,23 @@ public class StartPanelManager : MonoBehaviour
         #endif
     }
 
+    void onControlsButtonClick()
+    {
+        isControlsPanelActive = !isControlsPanelActive; 
+        panel.SetActive(false);
+        top.SetActive(false);
+        controlsPanel.SetActive(true); 
+        SetOperatingInstructionsText();
+    }
 
+    void onBackButtonClick()
+    {
+        isControlsPanelActive = false;
+        controlsPanel.SetActive(false);
+        panel.SetActive(true);
+        top.SetActive(true);
+        InitStartPanel();
+    }
     void InitCharacterSel(PreviewCharacter currentCharacter,bool isPlayer)
     {
         if (isPlayer)
@@ -192,14 +216,14 @@ public class StartPanelManager : MonoBehaviour
 
         valueText.text =
             $"<b>Damage Information:</b>\n" +
-            $"- Move Speed: <color=#00FFFF>{newCharacter.moveSpeed}</color>\n" +
-            $"- Attack 0: <color=#FF0000>{newCharacter.AttackDamage} HP</color> (Duration: <color=#FFA500>{newCharacter.attackDuration}s</color>)\n" +
-            $"- Attack 1: <color=#FF4500>{newCharacter.Attack1Damage} HP</color> (Duration: <color=#FFA500>{newCharacter.attack1Duration}s</color>)\n" +
-            $"- Attack 2: <color=#FF6347>{newCharacter.Attack2Damage} HP</color> (Duration: <color=#FFA500>{newCharacter.attack2Duration}s</color>)\n" +
-            $"- Block: Reduces incoming damage by <color=#32CD32>{(newCharacter.blockReduction * 100).ToString("N0")}%</color> (Duration: <color=#FFA500>{newCharacter.blockDuration}s</color>)\n" +
-            $"- Heal: Restores <color=#00FF00>{newCharacter.HealAmount} HP</color> (Duration: <color=#FFA500>{newCharacter.HealDuration}s</color>)\n" +
+            $"Move Speed: <color=#00FFFF>{newCharacter.moveSpeed}</color>\n" +
+            $"Primary Attack: <color=#FF0000>{newCharacter.AttackDamage} HP</color> (Duration: <color=#FFA500>{newCharacter.attackDuration}s</color>)\n" +
+            $"Secondary Attack: <color=#FF4500>{newCharacter.Attack1Damage} HP</color> (Duration: <color=#FFA500>{newCharacter.attack1Duration}s</color>)\n" +
+            $"Third Attack: <color=#FF6347>{newCharacter.Attack2Damage} HP</color> (Duration: <color=#FFA500>{newCharacter.attack2Duration}s</color>)\n" +
+            $"Block: Reduces incoming damage by <color=#32CD32>{(newCharacter.blockReduction * 100).ToString("N0")}%</color> (Duration: <color=#FFA500>{newCharacter.blockDuration}s</color>)\n" +
+            $"Heal: Restores <color=#00FF00>{newCharacter.HealAmount} HP</color> (Duration: <color=#FFA500>{newCharacter.HealDuration}s</color>)\n" +
             //$"- Max Health: <color=#FF69B4>{newCharacter.maxHealth}</color>\n" +
-            $"- Jump Force: <color=#1E90FF>{newCharacter.jumpForce}</color>";
+            $"Jump Force: <color=#1E90FF>{newCharacter.jumpForce}</color>";
 
 
 
