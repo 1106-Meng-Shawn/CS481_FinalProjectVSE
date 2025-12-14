@@ -56,19 +56,19 @@ MonoBehaviour:
   Portrait: {fileID: 21300000, guid: e95e0b070dc74adee860b0fa896fbc62, type: 3}
   PortraitLose: {fileID: 21300000, guid: acb70a1d2dfdc2f1f8392e8edb7c4e19, type: 3}
   Stand: {fileID: 21300000, guid: 5536fbfd47c3179d38a9dd183756717a, type: 3}
-  moveSpeed: 5
+  moveSpeed: 8
   attackDuration: 0.75
   attack1Duration: 0.5
   attack2Duration: 0.25
   blockDuration: 1
   HealDuration: 2
-  maxHealth: 100
+  maxHealth: 80
   AttackDamage: 20
   Attack1Damage: 10
   Attack2Damage: 5
-  hurtDuration: 0.125
+  hurtDuration: 1
   HealAmount: 1
-  jumpForce: 10
+  jumpForce: 5
   blockReduction: 0.3
   audioSource: {fileID: 0}
   attackSFX: {fileID: 0}
@@ -77,7 +77,7 @@ MonoBehaviour:
   blockSFX: {fileID: 0}
   victorySFX: {fileID: 0}
   defeatSFX: {fileID: 0}
-  aggressiveness: 0.5
+  aggressiveness: 0.7
   healThreshold: 0.3
   jumpAttackChance: 0.3
   attack0Tendency: 2
