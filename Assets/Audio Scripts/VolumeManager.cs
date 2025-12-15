@@ -35,6 +35,7 @@ public class VolumeManager : MonoBehaviour
     public AudioClip youWin;
     public AudioClip youLose;
     public AudioClip draw;
+    public AudioClip jump;
 
     [Header("Volumes")]
     [Range(0f, 1f)] public float musicVolume = 0.5f;
@@ -221,6 +222,8 @@ public class VolumeManager : MonoBehaviour
     public void playWin() => PlaySFX(youWin);
     public void playLose() => PlaySFX(youLose);
     public void playDraw() => PlaySFX(draw);
+
+    public void playJump() => PlaySFX(jump);
 
     public void SetMusicVolume(float vol)
     {

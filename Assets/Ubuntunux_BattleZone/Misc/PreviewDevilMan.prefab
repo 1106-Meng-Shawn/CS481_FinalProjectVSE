@@ -80,10 +80,10 @@ MonoBehaviour:
   aggressiveness: 0.7
   healThreshold: 0.3
   jumpAttackChance: 0.3
-  attack0Tendency: 2
-  attack1Tendency: 2
-  attack2Tendency: 2
-  blockTendency: 1
+  attack0Tendency: 3
+  attack1Tendency: 3
+  attack2Tendency: 3
+  blockTendency: 2
   healTendency: 1
-  attackTendency: 2
+  attackTendency: 3
   retreatTendency: 1

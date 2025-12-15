@@ -64,8 +64,8 @@ MonoBehaviour:
   HealDuration: 2
   maxHealth: 120
   AttackDamage: 30
-  Attack1Damage: 10
-  Attack2Damage: 5
+  Attack1Damage: 20
+  Attack2Damage: 10
   hurtDuration: 1
   HealAmount: 5
   jumpForce: 10
@@ -77,13 +77,13 @@ MonoBehaviour:
   blockSFX: {fileID: 0}
   victorySFX: {fileID: 0}
   defeatSFX: {fileID: 0}
-  aggressiveness: 0.6
+  aggressiveness: 0.75
   healThreshold: 0.3
   jumpAttackChance: 0.3
   attack0Tendency: 4
   attack1Tendency: 4
   attack2Tendency: 4
-  blockTendency: 3
+  blockTendency: 2
   healTendency: 3
   attackTendency: 4
-  retreatTendency: 5
+  retreatTendency: 2

@@ -73,6 +73,7 @@ public abstract class CharacterControl : MonoBehaviour
         if (canJump && isGrounded)
         {
             ChangeState(CharacterState.Jump);
+            VolumeManager.Instance.PlaySFX(previewCharacter.jumpSFX);
         }
     }
 

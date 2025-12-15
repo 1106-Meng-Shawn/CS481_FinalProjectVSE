@@ -75,8 +75,8 @@ MonoBehaviour:
   attack1SFX: {fileID: 0}
   attack2SFX: {fileID: 0}
   blockSFX: {fileID: 0}
-  victorySFX: {fileID: 0}
-  defeatSFX: {fileID: 0}
+  victorySFX: {fileID: 8300000, guid: e18cbe9d027edaf4084a4d9ba44e18cd, type: 3}
+  defeatSFX: {fileID: 8300000, guid: d11b882dd9d647f45b5923635960e86b, type: 3}
   aggressiveness: 0.9
   healThreshold: 0.3
   jumpAttackChance: 0.3

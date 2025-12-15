@@ -77,7 +77,7 @@ MonoBehaviour:
   blockSFX: {fileID: 0}
   victorySFX: {fileID: 0}
   defeatSFX: {fileID: 0}
-  aggressiveness: 0.4
+  aggressiveness: 0.8
   healThreshold: 0.3
   jumpAttackChance: 0.3
   attack0Tendency: 4

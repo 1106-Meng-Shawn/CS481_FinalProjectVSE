@@ -46,6 +46,7 @@ public class PreviewCharacter : MonoBehaviour
     [SerializeField] public AudioClip blockSFX;
     [SerializeField] public AudioClip victorySFX;
     [SerializeField] public AudioClip defeatSFX;
+    [SerializeField] public AudioClip jumpSFX;
 
     [Header("AI Personality")]
     [SerializeField][Range(0f, 1f)] public float aggressiveness = 0.5f;

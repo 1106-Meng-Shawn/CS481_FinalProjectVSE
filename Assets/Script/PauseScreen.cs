@@ -9,6 +9,7 @@ public class PauseScreen : MonoBehaviour
     [SerializeField] public Button RestartButton;
     [SerializeField] public Button MainMenuButton;
     bool isPaused = false;
+    bool isTopPanelActive = false;
 
 
 
