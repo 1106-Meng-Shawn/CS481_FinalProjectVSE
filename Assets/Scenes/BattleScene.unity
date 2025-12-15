@@ -2347,7 +2347,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5645,8 +5645,8 @@ MonoBehaviour:
   HurryUp: {fileID: 0}
   PerfectWin: {fileID: 0}
   timeUP: {fileID: 0}
-  youWin: {fileID: 0}
-  youLose: {fileID: 0}
+  youWin: {fileID: 8300000, guid: e18cbe9d027edaf4084a4d9ba44e18cd, type: 3}
+  youLose: {fileID: 8300000, guid: d11b882dd9d647f45b5923635960e86b, type: 3}
   draw: {fileID: 0}
   jump: {fileID: 0}
   musicVolume: 0.5

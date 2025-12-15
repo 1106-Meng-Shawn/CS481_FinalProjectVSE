@@ -145,6 +145,7 @@ public class StartPanelManager : MonoBehaviour
 
     void onControlsButtonClick()
     {
+        VolumeManager.Instance.PlayButtonClick();
         isControlsPanelActive = !isControlsPanelActive; 
         panel.SetActive(false);
         top.SetActive(false);
@@ -154,6 +155,7 @@ public class StartPanelManager : MonoBehaviour
 
     void onBackButtonClick()
     {
+        VolumeManager.Instance.PlayButtonClick();
         isControlsPanelActive = false;
         controlsPanel.SetActive(false);
         panel.SetActive(true);
